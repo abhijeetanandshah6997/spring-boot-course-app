@@ -3,8 +3,6 @@ package com.abhijeet.course.topic;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,9 +12,9 @@ public class TopicService {
     @Autowired
     private TopicRepository topicRepository;
 
-    public List<Topic> getAllTopics() {
+    public List<Topic> getAllTopics(int courseId) {
         // return topics;
-        return topicRepository.findAll();
+        return topicRepository.findByCourseId(courseId);
     }
 
     public Optional<Topic> getTopic(int id) {
@@ -24,8 +22,11 @@ public class TopicService {
         return topicRepository.findById(id);
     }
 
+    public List<Topic> getDeletedTopics(int courseId) {
+        return topicRepository.findIsDeleted(courseId);
+    }
+
     public Topic addTopic(Topic topic) {
-        // topics.add(topic);
         return topicRepository.save(topic);
     }
 

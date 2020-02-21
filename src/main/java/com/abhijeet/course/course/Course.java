@@ -1,13 +1,13 @@
-package com.abhijeet.course.topic;
+package com.abhijeet.course.course;
 
-import com.abhijeet.course.course.Course;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Where(clause = "is_deleted != true")
-public class Topic {
+public class Course {
 
     @Id @GeneratedValue(strategy= GenerationType.IDENTITY)
     private int id;
@@ -15,17 +15,13 @@ public class Topic {
     private String description;
     private boolean is_deleted;
 
-    @ManyToOne
-    @JoinColumn(name = "course_id")
-    private Course course;
+    public Course() {}
 
-    public Topic() {}
-
-    public Topic(String name, String description, Course course) {
+    public Course(String name, String description) {
+        super();
         this.name = name;
         this.description = description;
         this.is_deleted = false;
-        this.course = course;
     }
 
     public int getId() {
@@ -58,13 +54,5 @@ public class Topic {
 
     public void setIs_deleted(boolean is_deleted) {
         this.is_deleted = is_deleted;
-    }
-
-    public Course getCourse() {
-        return course;
-    }
-
-    public void setCourse(Course course) {
-        this.course = course;
     }
 }
