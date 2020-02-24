@@ -3,7 +3,6 @@ package com.abhijeet.course.course;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 @Where(clause = "is_deleted != true")

@@ -22,6 +22,16 @@ public class DocFileController {
     @Autowired
     private DocFileService docFileService;
 
+    @RequestMapping("/documentFiles")
+    public List<DocFile> getAllDocFiles(){
+        return docFileService.getAllDocFiles();
+    }
+
+    @RequestMapping("/documentFiles/{id}")
+    public DocFile getDocFile(@PathVariable int id){
+        return docFileService.getDocFile(id).get();
+    }
+
     @PostMapping("/uploadFile")
     public DocFileUploadResponse uploadFile(@RequestParam("file") MultipartFile file) {
         String fileName = docFileService.storeFile(file);
@@ -29,8 +39,16 @@ public class DocFileController {
                 .path("/downloadFile/")
                 .path(fileName)
                 .toUriString();
+        DocFile docFileStatus = docFileService.addDocFile(new DocFile(fileName, fileDownloadUri, file.getSize(), file.getContentType()));
+        String fileDBStatus;
+        if (docFileStatus.getId() > 0) {
+            fileDBStatus = "success";
+        }
+        else {
+            fileDBStatus = "failure";
+        }
         return new DocFileUploadResponse(fileName, fileDownloadUri,
-                file.getContentType(), file.getSize());
+                file.getContentType(), file.getSize(), fileDBStatus);
     }
 
     @PostMapping("/uploadMultipleFiles")
