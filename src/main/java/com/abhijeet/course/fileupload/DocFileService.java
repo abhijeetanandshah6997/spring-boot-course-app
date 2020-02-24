@@ -13,16 +13,31 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 @Service
 public class DocFileService {
 
 
     @Autowired
-    DocFileStorageProperties fileStorageProperties;
+    private DocFileStorageProperties fileStorageProperties;
 
+    @Autowired
+    private DocFileRepository docFileRepository;
 
+    public List<DocFile> getAllDocFiles() {
+        return docFileRepository.findAll();
+    }
+
+    public Optional<DocFile> getDocFile(int id) {
+        return docFileRepository.findById(id);
+    }
+
+    public DocFile addDocFile(DocFile docFile) {
+        return docFileRepository.save(docFile);
+    }
 
     public String storeFile(MultipartFile file) {
         // Normalize file name

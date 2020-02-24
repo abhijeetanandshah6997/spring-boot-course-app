@@ -6,14 +6,16 @@ public class DocFileUploadResponse {
     private String fileDownloadUri;
     private String fileType;
     private long size;
+    private String fileDBStatus;
 
     public DocFileUploadResponse() {}
 
-    public DocFileUploadResponse(String fileName, String fileDownloadUri, String fileType, long size) {
+    public DocFileUploadResponse(String fileName, String fileDownloadUri, String fileType, long size, String fileDBStatus) {
         this.fileName = fileName;
         this.fileDownloadUri = fileDownloadUri;
         this.fileType = fileType;
         this.size = size;
+        this.fileDBStatus = fileDBStatus;
     }
 
     public String getFileName() {
@@ -46,5 +48,13 @@ public class DocFileUploadResponse {
 
     public void setSize(long size) {
         this.size = size;
+    }
+
+    public String getFileDBStatus() {
+        return fileDBStatus;
+    }
+
+    public void setFileDBStatus(String fileDBStatus) {
+        this.fileDBStatus = fileDBStatus;
     }
 }
