@@ -1,8 +1,13 @@
 package com.abhijeet.course.course;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -12,8 +17,9 @@ public class CourseController {
     private CourseService courseService;
 
     @RequestMapping("/courses")
-    public List<Course> getAllCourses(){
-        return courseService.getAllCourses();
+    public Page<Course> getAllCourses(@RequestParam int pageNo, @RequestParam int pageSize, @RequestParam String sortParam, @RequestParam(required = false) Integer sortMethod){
+        Pageable pageable = PageRequest.of(pageNo, pageSize, Sort.by(sortParam));
+        return courseService.getAllCourses(pageable);
     }
 
     @RequestMapping("/courses/{id}")
